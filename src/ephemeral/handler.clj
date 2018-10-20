@@ -14,6 +14,9 @@
   (GET "/:key" [key]
     (->> key keyword (get @store) response))
   (GET "/" []
+    (response @store))
+  (DELETE "/" []
+    (reset! store {})
     (response @store)))
 
 (def app
