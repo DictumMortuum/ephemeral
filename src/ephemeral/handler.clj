@@ -13,6 +13,9 @@
     (response @store))
   (GET "/:key" [key]
     (->> key keyword (get @store) response))
+  (POST "/" {:keys [body]}
+    (reset! store body)
+    (response @store))
   (GET "/" []
     (response @store))
   (DELETE "/" []
@@ -20,7 +23,7 @@
     (response @store)))
 
 (def app
-  (routes 
+  (routes
     (-> app-routes
         (wrap-routes wrap-json-response {:keywords? true :bigdecimals? true})
         (wrap-routes wrap-json-body))
